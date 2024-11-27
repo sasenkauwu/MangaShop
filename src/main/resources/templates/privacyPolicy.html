@@ -1,10 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Privacy Policy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
+<!-- NAVBAR -->
+<nav id="navigation-bar" class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img th:src="@{/images/logo.png}" class="pageLogo" alt="MangaShop logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/index.html}">Home</a>
+                <a class="nav-link" th:href="@{/products.html}">Products</a>
+                <a class="nav-link" th:href="@{/aboutUs.html}">About Us</a>
+                <a class="nav-link" th:href="@{/contacts.html}">Contacts</a>
+                <a class="nav-link" th:href="@{/profile.html}">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
 
+<!-- Privacy Policy Description -->
+<div class="container mt-5 mb-5">
+    <h1 class="fw-bolder">Privacy Policy for MangaShop</h1>
+    <p>Effective Date: 19. 10. 2024</p>
+    <p>At MangaShop, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your personal information when you visit our website or make a purchase.</p>
+    <h3 class="fw-bold">1. Information We Collect</h3>
+    <p>We may collect the following types of information:</p>
+    <ul>
+        <li>Personal Information: Name, email address, shipping address, billing address, phone number, and payment information.</li>
+        <li>Non-Personal Information: Browser type, IP address, pages visited on our site, and the time spent on those pages.</li>
+    </ul>
+    <h3 class="fw-bold">2. How We Use Your Information</h3>
+    <p>We use your information for the following purposes:</p>
+    <ul>
+        <li>To process and fulfill your orders.</li>
+        <li>To communicate with you about your order status and customer service inquiries.</li>
+        <li>To send you marketing communications (only if you have opted in).</li>
+        <li>To improve our website, products, and services.</li>
+    </ul>
+    <h3 class="fw-bold">3. Sharing Your Information</h3>
+    <p>We do not sell or rent your personal information to third parties. We may share your information with:</p>
+    <ul>
+        <li>Service Providers: Third-party vendors who assist us in operating our website, processing payments, or delivering products (e.g., shipping companies).</li>
+        <li>Legal Requirements: If required by law or to protect our rights, we may disclose your information.</li>
+    </ul>
+    <h3 class="fw-bold">4. Data Security</h3>
+    <p>We implement a variety of security measures to protect your personal information. All sensitive information is transmitted via Secure Socket Layer (SSL) technology and is encrypted.</p>
+    <h3 class="fw-bold">5. Your Rights</h3>
+    <p>You have the right to:</p>
+    <ul>
+        <li>Access the personal information we hold about you.</li>
+        <li>Request corrections to any inaccurate information.</li>
+        <li>Request the deletion of your personal information.</li>
+        <li>Opt out of marketing communications.</li>
+    </ul>
+    <h3 class="fw-bold">6. Cookies</h3>
+    <p>Our website uses cookies to enhance your experience. You can choose to accept or decline cookies through your browser settings. Please note that declining cookies may affect your ability to use certain features of our site.</p>
+    <h3 class="fw-bold">7. Changes to This Policy</h3>
+    <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on our website. Please review this policy periodically for any updates.</p>
+    <h3 class="fw-bold">8. Contact Us</h3>
+    <p>If you have any questions or concerns about this Privacy Policy, please contact us at: Email: <a th:href="'#'">mangashop@bankai.com</a></p>
+    <p class="pt-3">Thank you for choosing MangaShop!</p>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="container-fluid text-center" id="newsletter">
+    <h3 class="fw-bolder pt-3">Sign up & save!</h3>
+    <p>Be updated on new products and offers. Sign up now!</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="input-group pb-3 d-flex justify-content-center">
+                <input type="email" class="form-control col-xl-5" id="newsletterEmail" placeholder="Enter email address">
+                <button type="submit" class="btn">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="container-fluid" id="footer">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Quick Links</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/index.html}">Home Page</a></li>
+                <li><a th:href="@{/products.html}">Products</a></li>
+                <li><a th:href="@{/aboutUs.html}">About Us</a></li>
+                <li><a th:href="@{/contacts.html}">Contacts</a></li>
+                <li><a th:href="@{/profile.html}">Profile</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Policy</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/privacyPolicy.html}">Privacy Policy</a></li>
+                <li><a th:href="@{/returnPolicy.html}">Return Policy</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Contact Us!</h4>
+            <ul class="list-unstyled">
+                <li>Need some help? Feel free to contact us <a th:href="@{/contacts.html}">here</a></li>
+                <li><a th:href="'#'">mangashop@bankai.com</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/script.js}"></script>
+<script th:src="@{/webjars/jquery/3.2.1/jquery.min.js}" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script th:src="@{/webjars/popper.js/1.12.9/popper.min.js}" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

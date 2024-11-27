@@ -1,10 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/webjars/bootstrap/4.0.0/css/bootstrap.min.css}" rel="stylesheet"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link th:href="@{/styles.css}" rel="stylesheet">
 </head>
 <body>
+<!-- NAVBAR -->
+<nav id="navigation-bar" class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img th:src="@{/images/logo.png}" class="pageLogo" alt="MangaShop logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/index.html}">Home</a>
+                <a class="nav-link" th:href="@{/products.html}">Products</a>
+                <a class="nav-link" th:href="@{/aboutUs.html}">About Us</a>
+                <a class="nav-link" th:href="@{/contacts.html}">Contacts</a>
+                <a class="nav-link" th:href="@{/profile.html}">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
 
+<!-- NEWSLETTER -->
+<div class="container-fluid text-center" id="newsletter">
+    <h3 class="fw-bolder pt-3">Sign up & save!</h3>
+    <p>Be updated on new products and offers. Sign up now!</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="input-group pb-3 d-flex justify-content-center">
+                <input type="email" class="form-control col-xl-5" id="newsletterEmail" placeholder="Enter email address">
+                <button type="submit" class="btn">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="container-fluid" id="footer">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Quick Links</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/index.html}">Home Page</a></li>
+                <li><a th:href="@{/products.html}">Products</a></li>
+                <li><a th:href="@{/aboutUs.html}">About Us</a></li>
+                <li><a th:href="@{/contacts.html}">Contacts</a></li>
+                <li><a th:href="@{/profile.html}">Profile</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Policy</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/privacyPolicy.html}">Privacy Policy</a></li>
+                <li><a th:href="@{/returnPolicy.html}">Return Policy</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Contact Us!</h4>
+            <ul class="list-unstyled">
+                <li>Need some help? Feel free to contact us <a th:href="@{/contactUs.html}">here</a></li>
+                <li><a th:href="'#'">mangashop@bankai.com</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/script.js}"></script>
+<script th:src="@{/webjars/jquery/3.2.1/jquery.slim.min.js}"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script th:src="@{/webjars/popper.js/1.12.9/umd/popper.min.js}"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script th:src="@{/webjars/bootstrap/4.0.0/js/bootstrap.min.js}"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

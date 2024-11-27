@@ -1,10 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Log in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
 <body>
+<!-- NAVBAR -->
+<nav id="navigation-bar" class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img th:src="@{/images/logo.png}" class="pageLogo" alt="MangaShop logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/}">Home</a>
+                <a class="nav-link" th:href="@{/products}">Products</a>
+                <a class="nav-link" th:href="@{/aboutUs}">About Us</a>
+                <a class="nav-link" th:href="@{/contacts}">Contacts</a>
+                <a class="nav-link" th:href="@{/profile}">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
 
+<!-- Login -->
+<div class="container mb-5 mt-5 text-center">
+    <form th:action="@{/login}" method="post">
+        <h1>Log in</h1>
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-6 pt-3">
+                <label for="inputUsernameLogin" class="form-label">Username</label>
+                <input type="text" class="form-control" id="inputUsernameLogin" placeholder="Username" name="username">
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-md-6 pt-3">
+                <label for="inputPasswordLogin" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPasswordLogin" placeholder="Password" name="password">
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <button type="submit">Log in</button>
+        </div>
+    </form>
+    <p class="pt-3">If you do not already have an account with us please register <a th:href="@{/registration}">here</a>.</p>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="container-fluid text-center" id="newsletter">
+    <h3 class="fw-bolder pt-3">Sign up & save!</h3>
+    <p>Be updated on new products and offers. Sign up now!</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="input-group pb-3 d-flex justify-content-center">
+                <input type="email" class="form-control col-xl-5" id="newsletterEmail" placeholder="Enter email address">
+                <button type="submit" class="btn">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="container-fluid" id="footer">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Quick Links</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/}">Home Page</a></li>
+                <li><a th:href="@{/products}">Products</a></li>
+                <li><a th:href="@{/aboutUs}">About Us</a></li>
+                <li><a th:href="@{/contacts}">Contacts</a></li>
+                <li><a th:href="@{/profile}">Profile</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Policy</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/privacyPolicy}">Privacy Policy</a></li>
+                <li><a th:href="@{/returnPolicy}">Return Policy</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Contact Us!</h4>
+            <ul class="list-unstyled">
+                <li>
+                    Need some help? Feel free to contact us <a th:href="@{/contacts}">here</a>
+                </li>
+                <li><a href="'#'">mangashop@bankai.com</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/script.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
