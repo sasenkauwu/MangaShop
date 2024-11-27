@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<!-- NAVBAR -->
+<nav id="navigation-bar" class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img th:src="@{/images/logo.png}" class="pageLogo" alt="MangaShop logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/static}">Home</a>
+                <a class="nav-link" th:href="@{/products}">Products</a>
+                <a class="nav-link" th:href="@{/aboutUs}">About Us</a>
+                <a class="nav-link" th:href="@{/contacts}">Contacts</a>
+                <a class="nav-link" th:href="@{/profile}">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- About Us Description -->
+<div class="container mt-5 mb-5">
+    <h1 class="fw-bolder">About Us!</h1>
+    <p>At MangaShop, we are passionate about bringing the vibrant world of manga and anime to fans everywhere. Our journey began with a love for storytelling through art, and we aim to share that passion with you through a carefully curated selection of manga comics, anime merchandise, and collectibles.</p>
+    <h3 class="fw-bold">Our Mission</h3>
+    <p>Our mission is to provide a one-stop shop for all things manga and anime. We strive to offer a diverse range of products that cater to every fan's interests, whether you're a seasoned collector or just starting your journey into the world of manga.</p>
+    <h3 class="fw-bold">What We Offer</h3>
+    <ul>
+        <li>Manga Comics: Explore our extensive collection of manga series from popular titles to hidden gems. We have something for every reader!</li>
+        <li>Anime Merchandise: From figures and plush toys to apparel and accessories, our merch is perfect for fans looking to showcase their love for their favorite series.</li>
+        <li>Community Engagement: We believe in fostering a community of fans. Join us for events, discussions, and exclusive offers as we celebrate our shared interests.</li>
+    </ul>
+    <h3 class="fw-bold">Our Values</h3>
+    <ul>
+        <li>Quality: We carefully select all our products to ensure you receive only the best quality items.</li>
+        <li>Customer Satisfaction: Your happiness is our priority. We are here to help with any questions or concerns you may have.</li>
+        <li>Passion for Manga & Anime: We are not just sellers; we are fans. We understand your love for the art form and strive to share that enthusiasm with every product we offer.</li>
+    </ul>
+    <h3 class="fw-bold">Join Us on This Journey</h3>
+    <p>Thank you for visiting MangaShop! We invite you to explore our store and discover the amazing world of manga and anime. Whether you're searching for the latest releases or unique merchandise, we're here to help you find exactly what you need.</p>
+    <p class="pt-3">Feel free to reach out to us at <a th:href="'mailto:mangashop@bankai.com'">mangashop@bankai.com</a> if you have any questions or just want to share your love for manga and anime!</p>
+    <p class="fw-bold pt-3">Happy shopping!</p>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="container-fluid text-center" id="newsletter">
+    <h3 class="fw-bolder pt-3">Sign up & save!</h3>
+    <p>Be updated on new products and offers. Sign up now!</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="input-group pb-3 d-flex justify-content-center">
+                <input type="email" class="form-control col-xl-5" id="newsletterEmail" placeholder="Enter email address">
+                <button type="submit" class="btn">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="container-fluid" id="footer">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Quick Links</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/static}">Home Page</a></li>
+                <li><a th:href="@{/products}">Products</a></li>
+                <li><a th:href="@{/aboutUs}">About Us</a></li>
+                <li><a th:href="@{/contacts}">Contacts</a></li>
+                <li><a th:href="@{/profile}">Profile</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Policy</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/privacyPolicy}">Privacy Policy</a></li>
+                <li><a th:href="@{/returnPolicy}">Return Policy</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Contact Us!</h4>
+            <ul class="list-unstyled">
+                <li>Need some help? Feel free to contact us <a th:href="'#'">here</a></li>
+                <li><a th:href="'mailto:mangashop@bankai.com'">mangashop@bankai.com</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/script.js}"></script>
+<script th:src="@{/bootstrap/js/jquery.slim.min.js}"></script>
+<script th:src="@{/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

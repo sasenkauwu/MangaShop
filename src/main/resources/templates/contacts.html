@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+<!-- NAVBAR -->
+<nav id="navigation-bar" class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <img th:src="@{/images/logo.png}" class="pageLogo" alt="MangaShop logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/static}">Home</a>
+                <a class="nav-link" th:href="@{/products}">Products</a>
+                <a class="nav-link" th:href="@{/aboutUs}">About Us</a>
+                <a class="nav-link" th:href="@{/contacts}">Contacts</a>
+                <a class="nav-link" th:href="@{/profile}">Profile</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Contacts Description -->
+<div class="container mb-5 mt-5">
+    <h1 class="fw-bolder">Contact Us!</h1>
+    <p>Do you have questions, feedback, or suggestions? We’d love to hear from you! Please reach out to us through the following channels:</p>
+    <h3 class="fw-bold">E-mail:</h3>
+    <p><a th:href="'mailto:mangashop@bankai.com'">mangashop@bankai.com</a></p>
+    <h3 class="fw-bold">Phone:</h3>
+    <p>+421 123 456 789</p>
+    <h3 class="fw-bold">Address:</h3>
+    <ul class="list-unstyled">
+        <li>MangaShop</li>
+        <li>Hurbanova 37</li>
+        <li>Dubnica nad Váhom, 059 54</li>
+        <li>Slovakia</li>
+    </ul>
+    <h3 class="fw-bold">Social Media</h3>
+    <p>Follow us on social media to stay updated on new arrivals, promotions, and exclusive content:</p>
+    <ul>
+        <li><a th:href="'#'">Facebook</a></li>
+        <li><a th:href="'#'">Instagram</a></li>
+        <li><a th:href="'#'">Twitter</a></li>
+    </ul>
+    <p>Before contacting us, we recommend checking our <a th:href="@{/faq}">Frequently Asked Questions</a> section, where you can find answers to common inquiries about orders, shipping, and returns.</p>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="container-fluid text-center" id="newsletter">
+    <h3 class="fw-bolder pt-3">Sign up & save!</h3>
+    <p>Be updated on new products and offers. Sign up now!</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="input-group pb-3 d-flex justify-content-center">
+                <input type="email" class="form-control col-xl-5" id="newsletterEmail" placeholder="Enter email address">
+                <button type="submit" class="btn">Subscribe</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="container-fluid" id="footer">
+    <div class="row justify-content-center">
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Quick Links</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/static}">Home Page</a></li>
+                <li><a th:href="@{/products}">Products</a></li>
+                <li><a th:href="@{/aboutUs}">About Us</a></li>
+                <li><a th:href="@{/contacts}">Contacts</a></li>
+                <li><a th:href="@{/profile}">Profile</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Policy</h4>
+            <ul class="list-unstyled">
+                <li><a th:href="@{/privacyPolicy}">Privacy Policy</a></li>
+                <li><a th:href="@{/returnPolicy}">Return Policy</a></li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-xs-12 d-flex flex-column align-items-center">
+            <h4 class="pt-4 fw-bold">Contact Us!</h4>
+            <ul class="list-unstyled">
+                <li>Need some help? Feel free to contact us <a th:href="'#'">here</a></li>
+                <li><a th:href="'mailto:mangashop@bankai.com'">mangashop@bankai.com</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/script.js}"></script>
+<script th:src="@{/bootstrap/js/jquery.slim.min.js}"></script>
+<script th:src="@{/bootstrap/js/popper.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
