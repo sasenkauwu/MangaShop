@@ -1,18 +1,27 @@
 package com.SemestralnaPraca.MangaShop.service;
 
+import com.SemestralnaPraca.MangaShop.DTO.UserLoginDTO;
 import com.SemestralnaPraca.MangaShop.DTO.UserRegistrationDTO;
+import com.SemestralnaPraca.MangaShop.DTO.UserUpdateDTO;
 import com.SemestralnaPraca.MangaShop.entity.Address;
 import com.SemestralnaPraca.MangaShop.entity.User;
 import com.SemestralnaPraca.MangaShop.repository.AddressRepository;
 import com.SemestralnaPraca.MangaShop.repository.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +31,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
-
 
 
     public User getUser(String email) {
@@ -67,7 +74,7 @@ public class UserService {
 
 
 
-    public User authenticateUser(String email, String password) {
+    /*public User authenticateUser(String email, String password) {
         System.out.println("Checking for email:" + email);
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if(optionalUser.isEmpty()) {
@@ -86,9 +93,69 @@ public class UserService {
 
 
         return user;
+    }*/
+
+    public String authenticateUser(UserLoginDTO userLoginDTO) {
+        System.out.println("Checking for email:" + userLoginDTO.getEmail());
+        User user = userRepository.findByEmail(userLoginDTO.getEmail())
+                .orElseThrow(() -> new BadCredentialsException("User not found"));
+
+        System.out.println("Checking for email:" + userLoginDTO.getEmail() + " password:" + userLoginDTO.getPassword());
+        if (!passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
+            throw new BadCredentialsException("Invalid password");
+        }
+        System.out.println("Password are match:" + passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword()));
+
+        // Generovanie JWT tokenu
+        return generateJwtToken(user);
+    }
+
+    private String generateJwtToken(User user) {
+        // Generovanie JWT tokenu pre autentifikáciu
+        return Jwts.builder()
+                .setSubject(user.getUsername())
+                .claim("roles", user.getRoles())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hodín
+                .signWith(SignatureAlgorithm.HS512, "yourSecretKey")
+                .compact();
     }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    public void updateUser(UserUpdateDTO userUpdateDTO) {
+        Optional<User> optionalUser = userRepository.findByEmail(userUpdateDTO.getEmail());
+        if(optionalUser.isEmpty()) {
+            System.out.println("no match for email:" + userUpdateDTO.getEmail());
+            throw new BadCredentialsException("The user with the given email does not exist.");
+        }
+
+        User user1 = optionalUser.get();
+
+        user1.setEmail(userUpdateDTO.getEmail());
+        user1.setName(userUpdateDTO.getName());
+        user1.setSurname(userUpdateDTO.getSurname());
+        user1.setUsername(userUpdateDTO.getUsername());
+
+        user1.setPhoneNumber(userUpdateDTO.getPhoneNumber());
+        if (userUpdateDTO.getEmail().endsWith("@mangashop.com")) {
+            user1.setRoles(Collections.singleton("ROLE_ADMIN"));
+        } else {
+            user1.setRoles(Collections.singleton("ROLE_USER"));
+        }
+
+        Address address = new Address();
+        address.setAddressLine(userUpdateDTO.getAddressLine());
+        address.setCity(userUpdateDTO.getCity());
+        address.setPostCode(userUpdateDTO.getPostCode());
+        address.setCountry(userUpdateDTO.getCountry());
+
+        address.setUser(user1);
+        user1.setAddress(address);
+
+        userRepository.save(user1);
+        addressRepository.save(address);
     }
 }

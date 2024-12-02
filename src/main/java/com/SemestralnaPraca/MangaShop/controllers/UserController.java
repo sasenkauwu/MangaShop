@@ -2,6 +2,7 @@ package com.SemestralnaPraca.MangaShop.controllers;
 
 import com.SemestralnaPraca.MangaShop.DTO.UserLoginDTO;
 import com.SemestralnaPraca.MangaShop.DTO.UserRegistrationDTO;
+import com.SemestralnaPraca.MangaShop.DTO.UserUpdateDTO;
 import com.SemestralnaPraca.MangaShop.entity.User;
 import com.SemestralnaPraca.MangaShop.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -50,7 +51,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping("/login")
+   /* @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO loginRequest, BindingResult  bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("Invalid data provided.");
@@ -63,7 +64,32 @@ public class UserController {
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    }*/
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDTO userLoginDTO, BindingResult  bindingResult, HttpServletResponse response) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Invalid data provided.");
+        }
+
+        try {
+            /*String jwtToken = userService.authenticateUser(userLoginDTO);
+            return ResponseEntity.ok()
+                    .header("Set-Cookie", "Authorization=" + jwtToken + "; HttpOnly; Path=/")
+                    .body("Login successful");*/
+            String token = userService.authenticateUser(userLoginDTO);
+            System.out.println("this is sasenka token: " + token);
+            Cookie authCookie = new Cookie("SASENKAtoken", token);
+            authCookie.setHttpOnly(true);
+            authCookie.setSecure(true);
+            authCookie.setPath("/");
+            response.addCookie(authCookie);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid username or password.");
+        }
     }
+
     @GetMapping("/logout")
     public ResponseEntity<String> logout(HttpSession session) {
         // Vyčistíme reláciu
@@ -80,6 +106,21 @@ public class UserController {
             return ResponseEntity.status(401).body("Not logged in");
         }
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Invalid data provided.");
+        }
+
+        try {
+            userService.updateUser(userUpdateDTO);
+            return ResponseEntity.ok("User information updated successfully");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
 
 
