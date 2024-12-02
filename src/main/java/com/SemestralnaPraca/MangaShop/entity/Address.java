@@ -3,8 +3,6 @@ package com.SemestralnaPraca.MangaShop.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -18,13 +16,13 @@ public class Address {
     private UUID id;
 
     private String addressLine;
-    private String City;
-    private String PostCode;
-    private String Country;
+    private String city;
+    private String postCode;
+    private String country;
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "user_email")
+    @JoinColumn(name = "email")
     private User user;
 
 

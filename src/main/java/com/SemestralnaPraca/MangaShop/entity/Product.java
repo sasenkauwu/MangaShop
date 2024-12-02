@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import java.util.UUID;
-import org.springframework.web.service.annotation.GetExchange;
 
 @Entity
 @Table(name = "products")
