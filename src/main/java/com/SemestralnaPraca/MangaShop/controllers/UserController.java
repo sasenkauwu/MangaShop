@@ -1,8 +1,6 @@
 package com.SemestralnaPraca.MangaShop.controllers;
 
-import com.SemestralnaPraca.MangaShop.DTO.UserLoginDTO;
-import com.SemestralnaPraca.MangaShop.DTO.UserRegistrationDTO;
-import com.SemestralnaPraca.MangaShop.DTO.UserUpdateDTO;
+import com.SemestralnaPraca.MangaShop.DTO.*;
 import com.SemestralnaPraca.MangaShop.entity.User;
 import com.SemestralnaPraca.MangaShop.service.UserService;
 import jakarta.servlet.http.Cookie;
@@ -79,12 +77,13 @@ public class UserController {
                     .body("Login successful");*/
             String token = userService.authenticateUser(userLoginDTO);
             System.out.println("this is sasenka token: " + token);
-            Cookie authCookie = new Cookie("SASENKAtoken", token);
+            Cookie authCookie = new Cookie("jwtToken", token);
             authCookie.setHttpOnly(true);
             authCookie.setSecure(true);
             authCookie.setPath("/");
             response.addCookie(authCookie);
-            return ResponseEntity.ok().build();
+           // return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body(token);
         } catch (Exception e) {
             return ResponseEntity.status(401).body("Invalid username or password.");
         }
@@ -107,7 +106,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("Invalid data provided.");
@@ -120,6 +119,21 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody @Valid UserDeleteDTO userDeleteDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Invalid data provided.");
+        }
+
+        try {
+            userService.deleteUser(userDeleteDTO);
+            return ResponseEntity.ok("User was deleted successfully");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 }
 

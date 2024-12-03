@@ -1,8 +1,6 @@
 package com.SemestralnaPraca.MangaShop.service;
 
-import com.SemestralnaPraca.MangaShop.DTO.UserLoginDTO;
-import com.SemestralnaPraca.MangaShop.DTO.UserRegistrationDTO;
-import com.SemestralnaPraca.MangaShop.DTO.UserUpdateDTO;
+import com.SemestralnaPraca.MangaShop.DTO.*;
 import com.SemestralnaPraca.MangaShop.entity.Address;
 import com.SemestralnaPraca.MangaShop.entity.User;
 import com.SemestralnaPraca.MangaShop.repository.AddressRepository;
@@ -158,4 +156,22 @@ public class UserService {
         userRepository.save(user1);
         addressRepository.save(address);
     }
+
+    public void deleteUser(UserDeleteDTO deleteDTO) {
+        if (!userRepository.existsByEmail(deleteDTO.getEmail())) {
+            throw new BadCredentialsException("User does not exists!");
+        } else {
+            if (passwordEncoder.matches(deleteDTO.getPassword(), userRepository.findUserByEmail(deleteDTO.getEmail()).getPassword())) {
+                userRepository.deleteByEmail(deleteDTO.getEmail());
+            } else {
+                throw new BadCredentialsException("Invalid password.");
+            }
+        }
+    }
+
+
+
+
+
+
 }
