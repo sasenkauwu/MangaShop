@@ -134,7 +134,20 @@ public class UserController {
         }
     }
 
+    @PutMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody @Valid UserPasswordChangeDTO userPasswordChangeDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body("Invalid data provided.");
+        }
+        try {
+            //mozno inak
+            userService.changePassword(userPasswordChangeDTO);
+            return ResponseEntity.ok("Password was chaneged successfully");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
+    }
 }
 
 

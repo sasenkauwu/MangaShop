@@ -169,9 +169,23 @@ public class UserService {
         }
     }
 
+    public void changePassword(UserPasswordChangeDTO passwordChangeDTO) {
+        Optional<User> optionalUser = userRepository.findByEmail(passwordChangeDTO.getEmail());
+        if(!optionalUser.isEmpty()) {
+            if (passwordEncoder.matches(passwordChangeDTO.getOldPassword(), optionalUser.get().getPassword())) {
+                User user = optionalUser.get();
+                String hashPassword = passwordEncoder.encode(passwordChangeDTO.getNewPassword());
+                user.setPassword(hashPassword);
+                userRepository.save(user);
+            } else {
+                throw new BadCredentialsException("Invalid old password.");
+            }
+        } else {
+            System.out.println("no match for email:" + passwordChangeDTO.getEmail());
+            throw new BadCredentialsException("The user with the given email does not exist.");
+        }
 
 
 
-
-
+    }
 }
