@@ -22,8 +22,9 @@ public class Address {
 
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "email")
+    @JoinColumn(name = "user_email")
     private User user;
+
 
 
 

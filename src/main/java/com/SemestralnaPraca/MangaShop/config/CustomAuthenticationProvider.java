@@ -47,7 +47,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
-    // Helper methods
 
     private Authentication createAuthenticationToken(User user, String email) {
         List<SimpleGrantedAuthority> authorities = extractAuthorities(user);
