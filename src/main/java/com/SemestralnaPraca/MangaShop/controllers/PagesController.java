@@ -83,17 +83,6 @@ public class PagesController {
         return "updateUser";
     }
 
-
-    /*private void addAuthAttributes(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean isAuthenticated = authentication != null && authentication.isAuthenticated() && !authentication.getPrincipal().equals("anonymousUser");
-        boolean isAdmin = isAuthenticated && authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
-
-        model.addAttribute("isAuthenticated", isAuthenticated);
-        model.addAttribute("isAdmin", isAdmin);
-    }*/
-
     private void addAuthAttributes(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -109,7 +98,6 @@ public class PagesController {
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
         model.addAttribute("isAdmin", isAdmin);
 
-        // Logovanie pre debugovanie
         System.out.println("Is authenticated: " + isAuthenticated + ", Email: " + email + ", Is Admin: " + isAdmin);
     }
 
