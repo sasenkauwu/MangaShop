@@ -3,29 +3,24 @@ const validateEmail = (email) => {
     return emailPattern.test(email);
 };
 
-// Function to show error messages
 function showError(elementId, message) {
     const errorElement = document.getElementById(elementId);
     errorElement.innerText = message;
 }
 
-// Clear error messages
 function clearErrors() {
     const errorElements = document.querySelectorAll('.text-danger');
     errorElements.forEach(error => error.innerText = '');
 }
 
-// Handle form submission
 document.getElementById('changePasswordForm').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent default form submission
-    clearErrors(); // Clear previous error messages
+    event.preventDefault();
+    clearErrors();
 
-    // Get form values
     const email = document.getElementById('inputEmailChangePswd').value.trim();
     const oldPassword = document.getElementById('inputPasswordChangePswdOld').value.trim();
     const newPassword = document.getElementById('inputPasswordChangePswdNew').value.trim();
 
-    // Validate inputs
     let isValid = true;
 
     if (!email || !validateEmail(email)) {
@@ -43,7 +38,6 @@ document.getElementById('changePasswordForm').addEventListener('submit', async (
 
     if (!isValid) return;
 
-    // Prepare data for submission
     const data = {
         email: email,
         oldPassword: oldPassword,
@@ -51,7 +45,6 @@ document.getElementById('changePasswordForm').addEventListener('submit', async (
     };
 
     try {
-        // Send PUT request to change password
         const response = await fetch('/api/user/changePassword', {
             method: 'PUT',
             headers: {
