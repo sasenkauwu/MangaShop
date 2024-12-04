@@ -18,26 +18,32 @@ public class UserRegistrationDTO {
 
     @NotEmpty(message = "First name cannot be empty.")
     private String name;
+
     @NotEmpty(message = "Last name cannot be empty.")
     private String surname;
-    @NotEmpty
+
+    @NotEmpty(message = "Username cannot be empty.")
     private String username;
+
     @NotEmpty(message = "Password cannot be empty.")
     @Size(min = 10, max = 25, message = "Password must be between 10-25 characters long.")
     private String password;
+
     @NotEmpty(message = "Phone number cannot be empty.")
     @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits.")
     private String phoneNumber;
 
-   // @Valid
-    //private AddressRegistrationDTO address;
+
     @NotEmpty(message = "Address Line cannot be empty.")
     private String addressLine;
+
     @NotEmpty(message = "City cannot be empty.")
     private String city;
+
     @NotEmpty(message = "PostCode cannot be empty.")
-    @Size(min = 5, max = 5, message = "Postcode must be exactly 5 characters.")
+    @Pattern(regexp = "^[0-9]{5}$", message = "Post code must be 5 digits.")
     private String postCode;
+
     @NotEmpty(message = "Country cannot be empty.")
     private String country;
 
