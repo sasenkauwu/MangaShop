@@ -4,13 +4,10 @@ import com.SemestralnaPraca.MangaShop.DTO.*;
 import com.SemestralnaPraca.MangaShop.entity.User;
 import com.SemestralnaPraca.MangaShop.service.UserService;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
@@ -18,7 +15,6 @@ import jakarta.servlet.http.HttpSession;
 
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
@@ -49,20 +45,6 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-   /* @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDTO loginRequest, BindingResult  bindingResult, HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Invalid data provided.");
-        }
-
-        try {
-            User user = userService.authenticateUser(loginRequest.getEmail(), loginRequest.getPassword());
-            session.setAttribute("user", user); // Uložíme používateľa do session
-            return ResponseEntity.ok("Login successful");
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
-        }
-    }*/
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody @Valid UserLoginDTO userLoginDTO, BindingResult  bindingResult, HttpServletResponse response) {
@@ -71,29 +53,28 @@ public class UserController {
         }
 
         try {
-            /*String jwtToken = userService.authenticateUser(userLoginDTO);
-            return ResponseEntity.ok()
-                    .header("Set-Cookie", "Authorization=" + jwtToken + "; HttpOnly; Path=/")
-                    .body("Login successful");*/
             String token = userService.authenticateUser(userLoginDTO);
-            System.out.println("this is sasenka token: " + token);
             Cookie authCookie = new Cookie("jwtToken", token);
-            authCookie.setHttpOnly(true);
             authCookie.setSecure(true);
+            authCookie.setHttpOnly(true);
             authCookie.setPath("/");
+            authCookie.setMaxAge(24 * 60 * 60); // 24 hodín
             response.addCookie(authCookie);
-           // return ResponseEntity.ok().build();
-            return ResponseEntity.ok().body(token);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(401).body("Invalid username or password.");
         }
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(HttpSession session) {
-        // Vyčistíme reláciu
-        session.invalidate();
-        return ResponseEntity.ok("Logout successful");
+    public ResponseEntity<String> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwtToken", null);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return ResponseEntity.ok("User Logged out successfully");
     }
 
     @GetMapping("/me")
@@ -125,7 +106,6 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body("Invalid data provided.");
         }
-
         try {
             userService.deleteUser(userDeleteDTO);
             return ResponseEntity.ok("User was deleted successfully");
@@ -140,7 +120,6 @@ public class UserController {
             return ResponseEntity.badRequest().body("Invalid data provided.");
         }
         try {
-            //mozno inak
             userService.changePassword(userPasswordChangeDTO);
             return ResponseEntity.ok("Password was chaneged successfully");
         } catch (IllegalStateException e) {

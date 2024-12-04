@@ -25,16 +25,10 @@ public class User {
     private String password;
     private String phoneNumber;
     private boolean newsletter = false;
-    //private String roles; //implementovat nieco take ked bude admin rola
+
+    private String roles;
 
 
-    //možno zmenit na string
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_email"))
-    @Column(name = "role")
-    private Set<String> roles = new HashSet<>();
-
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Address address;
 

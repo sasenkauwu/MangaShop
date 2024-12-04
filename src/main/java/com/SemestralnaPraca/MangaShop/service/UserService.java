@@ -1,12 +1,12 @@
 package com.SemestralnaPraca.MangaShop.service;
 
 import com.SemestralnaPraca.MangaShop.DTO.*;
+import com.SemestralnaPraca.MangaShop.config.CustomJwtUtil;
 import com.SemestralnaPraca.MangaShop.entity.Address;
 import com.SemestralnaPraca.MangaShop.entity.User;
 import com.SemestralnaPraca.MangaShop.repository.AddressRepository;
 import com.SemestralnaPraca.MangaShop.repository.UserRepository;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,8 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +27,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+    private final AuthenticationManager authenticationManager;
+
 
 
     public User getUser(String email) {
@@ -51,9 +52,9 @@ public class UserService {
 
         user.setPhoneNumber(userRegistrationDTO.getPhoneNumber());
         if (userRegistrationDTO.getEmail().endsWith("@mangashop.com")) {
-            user.setRoles(Collections.singleton("ROLE_ADMIN"));
+            user.setRoles("ROLE_USER,ROLE_ADMIN");
         } else {
-            user.setRoles(Collections.singleton("ROLE_USER"));
+            user.setRoles("ROLE_USER");
         }
 
         Address address = new Address();
@@ -71,53 +72,15 @@ public class UserService {
     }
 
 
-
-    /*public User authenticateUser(String email, String password) {
-        System.out.println("Checking for email:" + email);
-        Optional<User> optionalUser = userRepository.findByEmail(email);
-        if(optionalUser.isEmpty()) {
-            System.out.println("no match for email:" + email);
-            throw new BadCredentialsException("The user with the given email does not exist.");
-        }
-
-        User user = optionalUser.get();
-        System.out.println("Checking for email:" + email + " password:" + password);
-        boolean passwordMatch = passwordEncoder.matches(password, user.getPassword());
-        System.out.println("Password are match:" + passwordMatch);
-
-        if (!passwordMatch) {
-            throw new BadCredentialsException("The user with the given email does not exist.");
-        }
-
-
-        return user;
-    }*/
-
     public String authenticateUser(UserLoginDTO userLoginDTO) {
-        System.out.println("Checking for email:" + userLoginDTO.getEmail());
-        User user = userRepository.findByEmail(userLoginDTO.getEmail())
-                .orElseThrow(() -> new BadCredentialsException("User not found"));
-
-        System.out.println("Checking for email:" + userLoginDTO.getEmail() + " password:" + userLoginDTO.getPassword());
-        if (!passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
-            throw new BadCredentialsException("Invalid password");
-        }
-        System.out.println("Password are match:" + passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword()));
-
-        // Generovanie JWT tokenu
-        return generateJwtToken(user);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userLoginDTO.getEmail(), userLoginDTO.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
+        return CustomJwtUtil.generateToken(userLoginDTO.getEmail());
     }
 
-    private String generateJwtToken(User user) {
-        // Generovanie JWT tokenu pre autentifikáciu
-        return Jwts.builder()
-                .setSubject(user.getUsername())
-                .claim("roles", user.getRoles())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hodín
-                .signWith(SignatureAlgorithm.HS512, "yourSecretKey")
-                .compact();
-    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -130,33 +93,39 @@ public class UserService {
             throw new BadCredentialsException("The user with the given email does not exist.");
         }
 
-        User user1 = optionalUser.get();
+        User user = optionalUser.get();
 
-        user1.setEmail(userUpdateDTO.getEmail());
-        user1.setName(userUpdateDTO.getName());
-        user1.setSurname(userUpdateDTO.getSurname());
-        user1.setUsername(userUpdateDTO.getUsername());
+        user.setEmail(userUpdateDTO.getEmail());
+        user.setName(userUpdateDTO.getName());
+        user.setSurname(userUpdateDTO.getSurname());
+        user.setUsername(userUpdateDTO.getUsername());
 
-        user1.setPhoneNumber(userUpdateDTO.getPhoneNumber());
+        user.setPhoneNumber(userUpdateDTO.getPhoneNumber());
         if (userUpdateDTO.getEmail().endsWith("@mangashop.com")) {
-            user1.setRoles(Collections.singleton("ROLE_ADMIN"));
+            user.setRoles("ROLE_USER,ROLE_ADMIN");
         } else {
-            user1.setRoles(Collections.singleton("ROLE_USER"));
+            user.setRoles("ROLE_USER");
         }
 
-        Address address = new Address();
+        Address address = addressRepository.findAddressByUser(user);
+        if (address == null) {
+            address = new Address();
+            address.setUser(user);
+        }
+
         address.setAddressLine(userUpdateDTO.getAddressLine());
         address.setCity(userUpdateDTO.getCity());
         address.setPostCode(userUpdateDTO.getPostCode());
         address.setCountry(userUpdateDTO.getCountry());
 
-        address.setUser(user1);
-        user1.setAddress(address);
+        address.setUser(user);
+        user.setAddress(address);
 
-        userRepository.save(user1);
+        userRepository.save(user);
         addressRepository.save(address);
     }
 
+    @Transactional
     public void deleteUser(UserDeleteDTO deleteDTO) {
         if (!userRepository.existsByEmail(deleteDTO.getEmail())) {
             throw new BadCredentialsException("User does not exists!");

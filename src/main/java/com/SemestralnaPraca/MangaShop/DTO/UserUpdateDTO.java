@@ -21,7 +21,7 @@ public class UserUpdateDTO {
     @NotEmpty(message = "Last name cannot be empty.")
     private String surname;
 
-    @NotEmpty
+    @NotEmpty(message = "Username cannot be empty.")
     private String username;
 
     @NotEmpty(message = "Phone number cannot be empty.")
@@ -36,7 +36,7 @@ public class UserUpdateDTO {
     private String city;
 
     @NotEmpty(message = "PostCode cannot be empty.")
-    @Size(min = 5, max = 5, message = "Postcode must be exactly 5 characters.")
+    @Pattern(regexp = "^[0-9]{5}$", message = "Post code must be 5 digits.")
     private String postCode;
 
     @NotEmpty(message = "Country cannot be empty.")
