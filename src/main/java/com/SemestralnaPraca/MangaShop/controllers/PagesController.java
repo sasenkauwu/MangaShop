@@ -91,7 +91,8 @@ public class PagesController {
                 authentication.isAuthenticated());
         model.addAttribute("isAuthenticated", isAuthenticated);
 
-        String email = isAuthenticated ? authentication.getName() : "Guest";  // Pridanie správy o nezistenom používateľovi
+        //String email = isAuthenticated ? authentication.getName() : "Guest";  // Pridanie správy o nezistenom používateľovi
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("email", email);
 
         boolean isAdmin = isAuthenticated && authentication.getAuthorities().stream()

@@ -23,11 +23,18 @@
                 <a class="nav-link" th:href="@{/products}">Products</a>
                 <a class="nav-link" th:href="@{/aboutUs}">About Us</a>
                 <a class="nav-link" th:href="@{/contacts}">Contacts</a>
-                <a class="nav-link" th:href="@{/profile}">Profile</a>
+                <a th:if="${!isAuthenticated}" class="nav-link" th:href="@{/login}">Log in</a>
+                <a th:if="${isAuthenticated}" class="nav-link" th:href="@{/profile}">Profile</a>
+                <a th:if="${isAdmin}" class="nav-link" th:href="@{/users}">Users</a>
+                <a th:if="${isAuthenticated}" class="nav-link" th:href="@{/cart}">Cart</a>
+                <a class="nav-link" onclick="logout()" th:href="'#'">Log out</a>
             </div>
         </div>
     </div>
 </nav>
+
+<!-- Products -->
+
 
 <!-- NEWSLETTER -->
 <div class="container-fluid text-center" id="newsletter">

@@ -15,8 +15,7 @@
         <a class="navbar-brand">
             <img th:src="@{/images/logo.png}" class="pageLogo" alt="MangaShop logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -25,7 +24,11 @@
                 <a class="nav-link" th:href="@{/products}">Products</a>
                 <a class="nav-link" th:href="@{/aboutUs}">About Us</a>
                 <a class="nav-link" th:href="@{/contacts}">Contacts</a>
-                <a class="nav-link" th:href="@{/profile}">Profile</a>
+                <a th:if="${!isAuthenticated}" class="nav-link" th:href="@{/login}">Log in</a>
+                <a th:if="${isAuthenticated}" class="nav-link" th:href="@{/profile}">Profile</a>
+                <a th:if="${isAdmin}" class="nav-link" th:href="@{/users}">Users</a>
+                <a th:if="${isAuthenticated}" class="nav-link" th:href="@{/cart}">Cart</a>
+                <a class="nav-link" onclick="logout()" th:href="'#'">Log out</a>
             </div>
         </div>
     </div>
