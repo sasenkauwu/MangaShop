@@ -27,7 +27,7 @@
                 <a th:if="${isAuthenticated}" class="nav-link" th:href="@{/profile}">Profile</a>
                 <a th:if="${isAdmin}" class="nav-link" th:href="@{/users}">Users</a>
                 <a th:if="${isAuthenticated}" class="nav-link" th:href="@{/cart}">Cart</a>
-                <a class="nav-link" onclick="logout()" th:href="'#'">Log out</a>
+                <a th:if="${isAuthenticated}" class="nav-link" onclick="logout()" th:href="'#'">Log out</a>
             </div>
         </div>
     </div>

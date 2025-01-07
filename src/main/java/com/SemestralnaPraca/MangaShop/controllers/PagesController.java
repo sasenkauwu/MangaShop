@@ -83,6 +83,18 @@ public class PagesController {
         return "updateUser";
     }
 
+    @GetMapping("/users")
+    public String showUsers(Model model) {
+        addAuthAttributes(model);
+        return "users";
+    }
+
+    @GetMapping("/cart")
+    public String showCart(Model model) {
+        addAuthAttributes(model);
+        return "cart";
+    }
+
     private void addAuthAttributes(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
