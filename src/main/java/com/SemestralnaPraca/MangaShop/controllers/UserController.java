@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpSession;
 
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/user")
@@ -77,7 +79,7 @@ public class UserController {
         return ResponseEntity.ok("User Logged out successfully");
     }
 
-    @GetMapping("/me")
+   /* @GetMapping("/me")
     public ResponseEntity<String> getLoggedInUser(HttpSession session) {
         String user = (String) session.getAttribute("user");
         if (user != null) {
@@ -85,7 +87,19 @@ public class UserController {
         } else {
             return ResponseEntity.status(401).body("Not logged in");
         }
+    }*/
+
+    @GetMapping("/me")
+    public ResponseEntity<Object> getCurrentUser() {
+        Optional<User> currentUser = userService.getCurrentUser();
+
+        if (currentUser.isPresent()) {
+            return ResponseEntity.ok(currentUser.get());
+        } else {
+            return ResponseEntity.status(401).body("User is not authenticated.");
+        }
     }
+
 
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO, BindingResult bindingResult) {

@@ -157,4 +157,13 @@ public class UserService {
 
 
     }
+
+    public Optional<User> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated() || authentication.getName() == null) {
+            return Optional.empty();
+        }
+        return userRepository.findByEmail(authentication.getName());
+    }
 }
