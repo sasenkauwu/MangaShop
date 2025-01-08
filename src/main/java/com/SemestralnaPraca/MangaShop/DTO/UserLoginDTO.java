@@ -11,6 +11,6 @@ public class UserLoginDTO {
     @NotEmpty(message = "Email cannot be empty.")
     private String email;
     @NotEmpty(message = "Password cannot be empty.")
-    @Size(min = 10, max = 25, message = "Inavlid password.")
+    @Size(min = 10, max = 25, message = "Invalid password.")
     private String password;
 }

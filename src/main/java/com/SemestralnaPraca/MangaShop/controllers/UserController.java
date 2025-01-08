@@ -79,16 +79,6 @@ public class UserController {
         return ResponseEntity.ok("User Logged out successfully");
     }
 
-   /* @GetMapping("/me")
-    public ResponseEntity<String> getLoggedInUser(HttpSession session) {
-        String user = (String) session.getAttribute("user");
-        if (user != null) {
-            return ResponseEntity.ok("Logged in as: " + user);
-        } else {
-            return ResponseEntity.status(401).body("Not logged in");
-        }
-    }*/
-
     @GetMapping("/me")
     public ResponseEntity<Object> getCurrentUser() {
         Optional<User> currentUser = userService.getCurrentUser();
@@ -104,7 +94,7 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Invalid data provided.");
+            return ResponseEntity.badRequest().body(bindingResult.getFieldErrors());
         }
 
         try {

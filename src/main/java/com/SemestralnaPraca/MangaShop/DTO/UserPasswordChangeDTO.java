@@ -14,10 +14,10 @@ public class UserPasswordChangeDTO {
     private String email;
 
     @NotEmpty(message = "Password cannot be empty.")
-    @Size(min = 10, max = 25, message = "Inavlid password.")
+    @Size(min = 10, max = 25, message = "Invalid password.")
     private String oldPassword;
 
     @NotEmpty(message = "Password cannot be empty.")
-    @Size(min = 10, max = 25, message = "Inavlid password.")
+    @Size(min = 10, max = 25, message = "Invalid password.")
     private String newPassword;
 }
