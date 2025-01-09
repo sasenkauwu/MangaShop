@@ -1,5 +1,7 @@
 package com.SemestralnaPraca.MangaShop.controllers;
 
+import com.SemestralnaPraca.MangaShop.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -7,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+@RequiredArgsConstructor
 @Controller
 public class PagesController {
+    private final ProductService productService;
 
 
     @GetMapping("/aboutUs")
@@ -44,6 +48,7 @@ public class PagesController {
     @GetMapping("/products")
     public String showProducts(Model model) {
         addAuthAttributes(model);
+        model.addAttribute("products", productService.getAllProducts());
         return "products";
     }
 
@@ -65,22 +70,10 @@ public class PagesController {
         return "returnPolicy";
     }
 
-    @GetMapping("/deleteUser")
-    public String showDeleteUser(Model model) {
-        addAuthAttributes(model);
-        return "deleteUser";
-    }
-
     @GetMapping("/changePassword")
     public String showChangePassword(Model model) {
         addAuthAttributes(model);
         return "changePassword";
-    }
-
-    @GetMapping("/updateUser")
-    public String showUpdateUser(Model model) {
-        addAuthAttributes(model);
-        return "updateUser";
     }
 
     @GetMapping("/users")
@@ -103,7 +96,6 @@ public class PagesController {
                 authentication.isAuthenticated());
         model.addAttribute("isAuthenticated", isAuthenticated);
 
-        //String email = isAuthenticated ? authentication.getName() : "Guest";  // Pridanie správy o nezistenom používateľovi
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         model.addAttribute("email", email);
 

@@ -17,7 +17,9 @@ public class Product {
     private String title;
     private String description;
     private double price;
+    private String category;
     private String imageURL;
+
 
     //pridat prepojenie s reviews jedneho dna
 
