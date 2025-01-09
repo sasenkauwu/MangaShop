@@ -1,66 +1,73 @@
-const validateEmail = (email) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
-};
+document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+    const oldPassword = document.getElementById('inputPasswordChangePswdOld').value;
+    const newPassword = document.getElementById('inputPasswordChangePswdNew').value;
+    const repeatPassword = document.getElementById('inputPasswordChangePswdNew2').value;
 
-function showError(elementId, message) {
-    const errorElement = document.getElementById(elementId);
-    errorElement.innerText = message;
-}
+    document.getElementById('errorOldPassword').innerText = '';
+    document.getElementById('errorNewPassword').innerText = '';
+    document.getElementById('errorRepeatPassword').innerText = '';
 
-function clearErrors() {
-    const errorElements = document.querySelectorAll('.text-danger');
-    errorElements.forEach(error => error.innerText = '');
-}
+    let valid = true;
 
-document.getElementById('changePasswordForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    clearErrors();
-
-    const email = document.getElementById('inputEmailChangePswd').value.trim();
-    const oldPassword = document.getElementById('inputPasswordChangePswdOld').value.trim();
-    const newPassword = document.getElementById('inputPasswordChangePswdNew').value.trim();
-
-    let isValid = true;
-
-    if (!email || !validateEmail(email)) {
-        showError('emailError', 'Invalid email format.');
-        isValid = false;
-    }
-    if (!oldPassword) {
-        showError('oldPasswordError', 'Old password is required.');
-        isValid = false;
-    }
-    if (!newPassword) {
-        showError('newPasswordError', 'New password is required.');
-        isValid = false;
+    if (oldPassword.trim() === '') {
+        document.getElementById('errorOldPassword').innerText = 'Old password is required.';
+        valid = false;
     }
 
-    if (!isValid) return;
+    if (newPassword.length < 10 || newPassword.length > 25) {
+        document.getElementById('errorNewPassword').innerText = 'New password must be between 10 and 25 characters.';
+        valid = false;
+    }
 
-    const data = {
-        email: email,
-        oldPassword: oldPassword,
-        newPassword: newPassword
-    };
+    if (repeatPassword.length < 10 || repeatPassword.length > 25) {
+        document.getElementById('errorRepeatPassword').innerText = 'New password must be between 10 and 25 characters.';
+        valid = false;
+    }
+
+    if (newPassword !== repeatPassword) {
+        document.getElementById('errorRepeatPassword').innerText = 'Passwords do not match.';
+        valid = false;
+    }
+
+    if (!valid) {
+        return;
+    }
 
     try {
+        const userResponse = await fetch('/api/user/me');
+        if (!userResponse.ok) {
+            throw new Error('Failed to fetch user info.');
+        }
+        const user = await userResponse.json();
+        const email = user.email;
+
+        const payload = {
+            email: email,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        };
+
         const response = await fetch('/api/user/changePassword', {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify(payload)
         });
 
         if (response.ok) {
-            alert('Password changed successfully!');
+            //alert('Password changed successfully!');
+            window.location.href = '/profile';
         } else {
-            const errorMessage = await response.text();
-            alert(`Error: ${errorMessage}`);
+            //const errorText = await response.text();
+            //if (errorText.includes('Invalid old password.')) {
+                document.getElementById('errorOldPassword').innerText = 'You entered an incorrect old password.';
+            //} else {
+             //   alert('Failed to change password: ' + errorText);
+            //}
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('An error occurred while changing the password.');
+        alert('An unexpected error occurred. Please try again later.');
     }
 });

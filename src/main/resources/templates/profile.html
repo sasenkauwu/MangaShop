@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Log in</title>
+    <title>Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/styles.css}">
@@ -33,7 +33,88 @@
     </div>
 </nav>
 
-<p>tu bude jedneho dna profil</p>
+<!-- PROFILE EMAIL -->
+<div class="container mt-4">
+    <h3>Welcome to Your Profile, <span class="bold" id="userEmail"></span></h3>
+    <p>Hey! This is where you can view and update all your profile details. Let’s make sure everything is up-to-date so you can enjoy your anime and manga collection even more.</p>
+</div>
+
+<!-- PERSONAL INFORMATION -->
+<div class="container">
+    <h4 class="pt-4">Personal Information</h4>
+    <form id="updateForm">
+        <div class="form-group">
+            <label for="name">First Name</label>
+            <input type="text" class="form-control" id="name">
+            <small class="text-danger" id="nameError"></small>
+        </div>
+        <div class="form-group">
+            <label for="surname">Last Name</label>
+            <input type="text" class="form-control" id="surname">
+            <small class="text-danger" id="surnameError"></small>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" class="form-control" id="phoneNumber">
+            <small class="text-danger" id="phoneError"></small>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username">
+            <small class="text-danger" id="usernameError"></small>
+        </div>
+
+        <h4 class="pt-4">Shipping Information</h4>
+        <div class="form-group">
+            <label for="addressLine">Address Line</label>
+            <input type="text" class="form-control" id="addressLine">
+            <small class="text-danger" id="addressError"></small>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city">
+            <small class="text-danger" id="cityError"></small>
+        </div>
+        <div class="form-group">
+            <label for="postCode">Post Code</label>
+            <input type="text" class="form-control" id="postCode">
+            <small class="text-danger" id="postCodeError"></small>
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" class="form-control" id="country">
+            <small class="text-danger" id="countryError"></small>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <button type="button" id="updateButton">Update Information</button>
+        </div>
+    </form>
+</div>
+
+<!-- Change Password -->
+<div class="container mt-5">
+    <h4>Hey, worried about your account security?</h4>
+    <p>Change your password anytime by clicking <a class="font-weight-bold" th:href="@{/changePassword}">HERE.</a> Make sure your account is as secure as your favorite anime’s storyline!</p>
+</div>
+
+<!-- Delete Account -->
+<div class="container mt-5 mb-5">
+    <h4>Thinking about leaving us?</h4>
+    <p>We're sad to see you go! If you decide to delete your account, please remember it’s an irreversible action.</p>
+</div>
+<div class="container mb-5 mt-2">
+    <form id="deleteUserForm">
+        <div class="form-group">
+            <label for="inputPasswordDelete" class="form-label">Password</label>
+            <input type="password" class="form-control" id="inputPasswordDelete" placeholder="Password" name="password">
+            <small id="deleteUserError" class="text-danger"></small>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <button type="button" id="deleteUserBtn">Delete User</button>
+        </div>
+    </form>
+    <p class="pt-3">This action is irreversible and will delete your account, all your order history and preferences.</p>
+</div>
 
 
 <!-- NEWSLETTER -->
@@ -83,6 +164,8 @@
 </div>
 
 <script th:src="@{/regLogScript.js}"></script>
+<script th:src="@{/profileScript.js}"></script>
+<script th:src="@{/deleteProfileScript.js}"></script>
 <script th:src="'https://code.jquery.com/jquery-3.2.1.slim.min.js'" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script th:src="'https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js'" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script th:src="'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js'" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
