@@ -7,6 +7,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -94,27 +95,28 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult.getFieldErrors());
+            return ResponseEntity.badRequest().body("Invalid data provided.");
         }
 
         try {
             userService.updateUser(userUpdateDTO);
             return ResponseEntity.ok("User information updated successfully");
         } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@RequestBody @Valid UserDeleteDTO userDeleteDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("Invalid data provided.");
+            return ResponseEntity.badRequest().body("Invalid password.");
         }
+
         try {
             userService.deleteUser(userDeleteDTO);
             return ResponseEntity.ok("User was deleted successfully");
         } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -127,9 +129,19 @@ public class UserController {
             userService.changePassword(userPasswordChangeDTO);
             return ResponseEntity.ok("Password was chaneged successfully");
         } catch (IllegalStateException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 
+    }
+
+    @PostMapping("/subscribe/{email}")
+    public ResponseEntity<?> subscribeNewsletter(@PathVariable String email) {
+        try {
+            userService.subscribeNewsletter(email);
+            return ResponseEntity.ok("Newsletter subscribed successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }
 

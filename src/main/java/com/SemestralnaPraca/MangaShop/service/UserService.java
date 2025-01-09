@@ -38,7 +38,7 @@ public class UserService {
 
     public String registerNewUser(@Valid UserRegistrationDTO userRegistrationDTO) {
         if (userRepository.existsByEmail(userRegistrationDTO.getEmail())) {
-            throw new RuntimeException("User with this email already exists");
+            throw new IllegalStateException("User with this email already exists");
         }
 
         User user = new User();
@@ -140,7 +140,7 @@ public class UserService {
 
     public void changePassword(UserPasswordChangeDTO passwordChangeDTO) {
         Optional<User> optionalUser = userRepository.findByEmail(passwordChangeDTO.getEmail());
-        if(!optionalUser.isEmpty()) {
+        if(optionalUser.isPresent()) {
             if (passwordEncoder.matches(passwordChangeDTO.getOldPassword(), optionalUser.get().getPassword())) {
                 User user = optionalUser.get();
                 String hashPassword = passwordEncoder.encode(passwordChangeDTO.getNewPassword());
@@ -165,5 +165,16 @@ public class UserService {
             return Optional.empty();
         }
         return userRepository.findByEmail(authentication.getName());
+    }
+
+    public void subscribeNewsletter(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            User newUser = user.get();
+            newUser.setNewsletter(true);
+            userRepository.save(newUser);
+        } else {
+            throw new RuntimeException("The user with the given email does not exist.");
+        }
     }
 }

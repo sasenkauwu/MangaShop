@@ -30,7 +30,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/user/register", "/api/user/login").permitAll() // Verejné endpointy
+                        .requestMatchers("/api/user/register", "/api/user/login", "/api/user/subscribe/**").permitAll() // Verejné endpointy
                         .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/user/users").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/user/**").authenticated()
