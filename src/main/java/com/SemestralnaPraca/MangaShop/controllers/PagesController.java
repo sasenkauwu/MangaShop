@@ -8,6 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.UUID;
+
 
 @RequiredArgsConstructor
 @Controller
@@ -51,6 +55,15 @@ public class PagesController {
         model.addAttribute("products", productService.getAllProducts());
         return "products";
     }
+
+    @GetMapping("/product/{id}")
+    public String showProductDetails(@PathVariable UUID id, Model model) {
+        addAuthAttributes(model);
+        model.addAttribute("product", productService.getProduct(id));
+        return "productDetails";
+    }
+
+
 
     @GetMapping("/profile")
     public String showProfile(Model model) {

@@ -3,6 +3,10 @@ package com.SemestralnaPraca.MangaShop.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
+import java.awt.print.Book;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -21,6 +25,7 @@ public class Product {
     private String imageURL;
 
 
-    //pridat prepojenie s reviews jedneho dna
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
 }
