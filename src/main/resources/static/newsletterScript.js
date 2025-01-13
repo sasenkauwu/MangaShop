@@ -13,8 +13,6 @@ document.getElementById("newsletterBTN").addEventListener("click", async () => {
         });
 
         if (response.ok) {
-            const message = await response.text();
-            alert(message);
             emailInput.value = "";
         } else {
             const error = await response.text();

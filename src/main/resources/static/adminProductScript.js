@@ -9,8 +9,7 @@ document.getElementById('submitBtn').addEventListener('click', async function ()
         });
 
         if (response.ok) {
-            const message = await response.text();
-            alert('Success: ' + message);
+            window.location.href = '/products';
         } else {
             const error = await response.text();
             alert('Error: ' + error);

@@ -109,10 +109,6 @@ function submitRegistrationForm() {
                 window.location.href = '/login';
                 return response.text();
             })
-            .then(data => {
-                alert(data || "User registered successfully");
-
-            })
             .catch(error => {
                 console.error("Error:", error);
                 alert("Something went wrong, please try again later.");
@@ -200,7 +196,6 @@ document.addEventListener('DOMContentLoaded', () => {
             password: passwordInput.value.trim(),
         };
 
-        //fungujuce
         try {
             const response = await fetch('/api/user/login', {
                 method: 'POST',

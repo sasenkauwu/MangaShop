@@ -26,6 +26,9 @@ public class Product {
     private String imageURL;
     private double rating = 0.0;
 
+    @Transient
+    private int quantityInCart = 1;
+
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();

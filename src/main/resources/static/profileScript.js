@@ -115,7 +115,6 @@ document.getElementById('updateButton').addEventListener('click', function () {
         })
             .then(response => {
                 if (response.ok) {
-                    alert('User information updated successfully!');
                 } else {
                     return response.json();
                 }

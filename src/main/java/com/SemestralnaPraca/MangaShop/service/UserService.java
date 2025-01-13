@@ -3,8 +3,10 @@ package com.SemestralnaPraca.MangaShop.service;
 import com.SemestralnaPraca.MangaShop.DTO.*;
 import com.SemestralnaPraca.MangaShop.config.CustomJwtUtil;
 import com.SemestralnaPraca.MangaShop.entity.Address;
+import com.SemestralnaPraca.MangaShop.entity.Cart;
 import com.SemestralnaPraca.MangaShop.entity.User;
 import com.SemestralnaPraca.MangaShop.repository.AddressRepository;
+import com.SemestralnaPraca.MangaShop.repository.CartRepository;
 import com.SemestralnaPraca.MangaShop.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -26,6 +28,7 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final AddressRepository addressRepository;
+    private final CartRepository cartRepository;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private final AuthenticationManager authenticationManager;
@@ -66,9 +69,14 @@ public class UserService {
         address.setUser(user);
         user.setAddress(address);
 
-        //pridat cart
+        userRepository.save(user);
 
-        return userRepository.save(user).getEmail();
+        Cart cart = new Cart();
+        cart.setUser(user);
+        cart.setTotalPrice(0.0);
+        cartRepository.save(cart);
+
+        return user.getEmail();
     }
 
 

@@ -2,7 +2,7 @@ document.getElementById('deleteUserBtn').addEventListener('click', async functio
     const password = document.getElementById('inputPasswordDelete').value;
     const errorField = document.getElementById('deleteUserError');
 
-    errorField.innerText = ''; // Vyčisti predchádzajúce chyby
+    errorField.innerText = '';
 
     if (!password) {
         errorField.innerText = 'Please enter your password.';
@@ -30,11 +30,9 @@ document.getElementById('deleteUserBtn').addEventListener('click', async functio
         });
 
         if (deleteResponse.ok) {
-            alert('Your account has been successfully deleted.');
             logout();
             window.location.href = '/';
         } else {
-            //const errorText = await deleteResponse.text();
             errorField.innerText = 'Invalid password provided.' || 'Failed to delete account.';
         }
     } catch (error) {

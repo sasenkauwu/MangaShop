@@ -56,15 +56,10 @@ document.getElementById('changePasswordBtn').addEventListener('click', async () 
         });
 
         if (response.ok) {
-            //alert('Password changed successfully!');
             window.location.href = '/profile';
         } else {
-            //const errorText = await response.text();
-            //if (errorText.includes('Invalid old password.')) {
-                document.getElementById('errorOldPassword').innerText = 'You entered an incorrect old password.';
-            //} else {
-             //   alert('Failed to change password: ' + errorText);
-            //}
+            document.getElementById('errorOldPassword').innerText = 'You entered an incorrect old password.';
+
         }
     } catch (error) {
         console.error('Error:', error);

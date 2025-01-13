@@ -5,25 +5,26 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.*;
+import java.util.UUID;
 
 @Entity
-@Table(name = "cart")
+@Table(name = "cart_product")
 @RequiredArgsConstructor
 @Data
-public class Cart {
+public class CartProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @OneToOne
     @JsonIgnore
-    @JoinColumn(name = "user_email")
-    private User user;
+    @ManyToOne
+    @JoinColumn(name = "cart_id", nullable = false)
+    private Cart cart;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartProduct> cartProducts = new ArrayList<>();
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 
-    private double totalPrice;
-
+    private int quantity;
 }
