@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -74,5 +75,17 @@ public class ProductService {
         }
 
         return productRepository.save(product).getId();
+    }
+
+    public List<Product> searchProducts(String query) {
+        return productRepository.findAll().stream()
+                .filter(product -> product.getTitle().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getProductsByCategory(String category) {
+        return productRepository.findAll().stream()
+                .filter(product -> product.getCategory().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
     }
 }

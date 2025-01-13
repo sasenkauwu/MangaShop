@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
 
@@ -65,7 +66,19 @@ public class PagesController {
         return "productDetails";
     }
 
+    @GetMapping("/products/search")
+    public String searchProducts(@RequestParam String query, Model model) {
+        addAuthAttributes(model);
+        model.addAttribute("products", productService.searchProducts(query));
+        return "products";
+    }
 
+    @GetMapping("/products/category")
+    public String filterProductsByCategory(@RequestParam String category, Model model) {
+        addAuthAttributes(model);
+        model.addAttribute("products", productService.getProductsByCategory(category));
+        return "products";
+    }
 
     @GetMapping("/profile")
     public String showProfile(Model model) {
