@@ -3,8 +3,6 @@ package com.SemestralnaPraca.MangaShop.controllers;
 import com.SemestralnaPraca.MangaShop.DTO.ReviewResponseDTO;
 import com.SemestralnaPraca.MangaShop.DTO.ReviewSaveDTO;
 import com.SemestralnaPraca.MangaShop.DTO.ReviewUpdateDTO;
-import com.SemestralnaPraca.MangaShop.entity.Review;
-import com.SemestralnaPraca.MangaShop.repository.ReviewRepository;
 import com.SemestralnaPraca.MangaShop.service.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

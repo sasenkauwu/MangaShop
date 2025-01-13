@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add product to cart
     if (addProductBtn) {
         addProductBtn.addEventListener("click", function () {
-            const productId = window.location.pathname.split("/")[2]; // Extract productId from URL
+            const productId = window.location.pathname.split("/")[2];
 
             if (productId) {
                 fetch(`/api/cart/add/${productId}`, {
@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
                 .then(response => {
                     if (response.ok) {
-                        loadCartItems(); // Refresh cart display
+                        loadCartItems();
                     } else {
                         return response.text().then(text => {
                             throw new Error(text || "Error clearing the cart.");

@@ -57,6 +57,6 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Na hashovanie hesiel
+        return new BCryptPasswordEncoder();
     }
 }

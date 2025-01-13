@@ -44,7 +44,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    // Helper methods
 
     private boolean processJwtToken(String jwt, HttpServletRequest request, HttpServletResponse response)
             throws IOException {

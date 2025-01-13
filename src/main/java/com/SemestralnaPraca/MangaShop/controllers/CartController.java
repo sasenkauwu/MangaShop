@@ -1,8 +1,6 @@
 package com.SemestralnaPraca.MangaShop.controllers;
 
 import com.SemestralnaPraca.MangaShop.DTO.CartGetProductsResponseDTO;
-import com.SemestralnaPraca.MangaShop.DTO.ReviewResponseDTO;
-import com.SemestralnaPraca.MangaShop.entity.Cart;
 import com.SemestralnaPraca.MangaShop.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
