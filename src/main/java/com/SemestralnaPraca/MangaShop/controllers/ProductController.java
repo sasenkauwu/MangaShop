@@ -30,7 +30,6 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
-    //TODO toto opravit lebo to je napicu(id je v mappingu ale nikde sa nepouziva v parametre)
     @PutMapping("/update/{id}")
     public void updateProduct(@RequestBody @Valid ProductUpdateDTO productUpdateDTO) {
         productService.updateProduct(productUpdateDTO);

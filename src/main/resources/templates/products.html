@@ -91,6 +91,7 @@
                 </div>
                 <div class="card-footer text-center">
                     <a th:href="@{/product/{id}(id=${product.id})}" id="productDetailsBTN" class="btn btn-outline-dark btn-sm">View Details</a>
+                    <button th:if="${isAdmin}" class="btn btn-danger btn-sm delete-product-btn" th:data-product-id="${product.id}">x</button>
                 </div>
             </div>
         </div>
