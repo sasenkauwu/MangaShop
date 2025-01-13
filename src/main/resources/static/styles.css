@@ -164,3 +164,12 @@ button:hover {
 .reviews-container .card .card-body {
     padding: 20px;
 }
+
+.banner-text {
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    border: 3px solid black;
+    padding: 10px;
+    display: inline-block;
+}
