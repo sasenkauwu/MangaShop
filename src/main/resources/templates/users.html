@@ -34,7 +34,33 @@
 </nav>
 
 <!-- Users info -->
-
+<div class="container my-4">
+  <h2 class="text-center">User Management</h2>
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered">
+      <thead>
+      <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Username</th>
+        <th>Phone Number</th>
+        <th>Roles</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.surname}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.phoneNumber}"></td>
+        <td th:text="${user.roles}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <!-- NEWSLETTER -->
 <div class="container-fluid text-center" id="newsletter">

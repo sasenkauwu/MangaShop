@@ -167,6 +167,25 @@ public class UserService {
         return userRepository.findByEmail(authentication.getName());
     }
 
+    public Optional<CurrentUserResponseDTO> getCurrentUserResponseDTO() {
+        return getCurrentUser().map(user -> {
+            CurrentUserResponseDTO currentUserResponseDTO = new CurrentUserResponseDTO();
+            currentUserResponseDTO.setEmail(user.getEmail());
+            currentUserResponseDTO.setName(user.getName());
+            currentUserResponseDTO.setSurname(user.getSurname());
+            currentUserResponseDTO.setUsername(user.getUsername());
+            currentUserResponseDTO.setPhoneNumber(user.getPhoneNumber());
+
+            if (user.getRoles() != null) {
+                currentUserResponseDTO.setAddressLine(user.getAddress().getAddressLine());
+                currentUserResponseDTO.setCity(user.getAddress().getCity());
+                currentUserResponseDTO.setPostCode(user.getAddress().getPostCode());
+                currentUserResponseDTO.setCountry(user.getAddress().getCountry());
+            }
+            return currentUserResponseDTO;
+        });
+    }
+
     public void subscribeNewsletter(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {

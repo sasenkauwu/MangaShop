@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.awt.print.Book;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,11 +31,13 @@ public class User {
 
     private String roles;
 
-
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Address address;
 
-    //doimplementovat cart a reviews
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews = new ArrayList<>();
 
 
 }

@@ -91,6 +91,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/meDTO")
+    public ResponseEntity<Object> getCurrentUserDTO() {
+        Optional<CurrentUserResponseDTO> currentUserResponseDTO = userService.getCurrentUserResponseDTO();
+
+        if (currentUserResponseDTO.isPresent()) {
+            return ResponseEntity.ok(currentUserResponseDTO.get());
+        } else {
+            return ResponseEntity.status(401).body("User is not authenticated.");
+        }
+    }
 
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO, BindingResult bindingResult) {
