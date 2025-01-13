@@ -98,20 +98,28 @@ function submitRegistrationForm() {
         fetch('/api/user/register', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(userData)
+            body: JSON.stringify(userData),
         })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
+                if (response.ok) {
+                    window.location.href = '/login';
+                } else {
+                    return response.text().then(error => {
+                        const formError = document.createElement('div');
+                        formError.className = 'alert alert-danger mt-3';
+                        formError.textContent = error;
+                        document.getElementById('registrationForm').appendChild(formError);
+                    });
                 }
-                window.location.href = '/login';
-                return response.text();
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("Something went wrong, please try again later.");
+                const formError = document.createElement('div');
+                formError.className = 'alert alert-danger mt-3';
+                formError.textContent = "Something went wrong, please try again later.";
+                document.getElementById('registrationForm').appendChild(formError);
             });
     }
 
