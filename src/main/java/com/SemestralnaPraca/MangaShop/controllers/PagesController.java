@@ -1,6 +1,7 @@
 package com.SemestralnaPraca.MangaShop.controllers;
 
 import com.SemestralnaPraca.MangaShop.service.ProductService;
+import com.SemestralnaPraca.MangaShop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Controller
 public class PagesController {
     private final ProductService productService;
+    private final UserService userService;
 
 
     @GetMapping("/aboutUs")
@@ -92,6 +94,7 @@ public class PagesController {
     @GetMapping("/users")
     public String showUsers(Model model) {
         addAuthAttributes(model);
+        model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 

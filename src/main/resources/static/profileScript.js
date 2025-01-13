@@ -8,7 +8,7 @@ function clearErrors() {
 }
 
 function loadCurrentUserData() {
-    fetch('/api/user/me')
+    fetch('/api/user/meDTO')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch user data');
@@ -23,14 +23,10 @@ function loadCurrentUserData() {
                 document.getElementById("phoneNumber").value = data.phoneNumber || '';
                 document.getElementById("username").value = data.username || '';
 
-                if (data.address) {
-                    document.getElementById("addressLine").value = data.address.addressLine || '';
-                    document.getElementById("city").value = data.address.city || '';
-                    document.getElementById("postCode").value = data.address.postCode || '';
-                    document.getElementById("country").value = data.address.country || '';
-                } else {
-                    console.warn("Adresa nie je dostupná pre tohto používateľa.");
-                }
+                    document.getElementById("addressLine").value = data.addressLine || '';
+                    document.getElementById("city").value = data.city || '';
+                    document.getElementById("postCode").value = data.postCode || '';
+                    document.getElementById("country").value = data.country || '';
             } else {
                 console.warn("Žiadne údaje pre prihláseného používateľa.");
             }

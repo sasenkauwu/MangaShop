@@ -19,10 +19,12 @@ public class Product {
     private UUID id;
 
     private String title;
+    @Column(length = 2000)
     private String description;
     private double price;
     private String category;
     private String imageURL;
+    private double rating = 0.0;
 
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Product Details</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/styles.css}">
 </head>
@@ -42,16 +44,42 @@
         <div class="col-md-7 product-details-info">
             <span th:text="${product.category}" class="text-uppercase text-muted"></span>
             <h1 th:text="${product.title}" class="my-3"></h1>
+            <div>
+                <strong>Rating:</strong>
+                <span th:text="${product.rating} + ' / 5'" class="text-warning"></span>
+            </div>
             <p th:text="'€' + ${product.price}" class="text-success font-weight-bold"></p>
             <div class="product-details-description mt-4">
                 <strong>Description:</strong>
                 <p th:text="${product.description}" class="mt-2"></p>
             </div>
-            <div class="product-details-add-to-cart mt-4">
+            <div th:if="${isAuthenticated}" class="product-details-add-to-cart mt-4">
                 <input type="number" class="form-control product-details-quantity-input d-inline-block" value="1" min="1">
-                <button class="btn btn-primary ml-3 product-details-add-button">Add to Cart</button>
+                <button class="btn btn-outline-dark ml-3 product-details-add-button">Add to Cart</button>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Reviews Section -->
+<div class="container reviews-container mt-5 p-4">
+    <h2 class="text-center">Reviews</h2>
+    <div id="reviews-list" class="reviews-list">
+        <!-- Reviews will be dynamically loaded here -->
+    </div>
+    <div th:if="${isAuthenticated}" class="add-review-section mt-4">
+        <h3>Add a Review</h3>
+        <form id="add-review-form">
+            <div class="form-group">
+                <label for="rating">Rating (1-5)</label>
+                <input type="number" id="rating" class="form-control" min="1" max="5" required>
+            </div>
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea id="comment" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-dark">Submit</button>
+        </form>
     </div>
 </div>
 
@@ -101,8 +129,8 @@
 </div>
 
 <script th:src="@{/regLogScript.js}"></script>
-<script th:src="@{/adminProductScript.js}"></script>
 <script th:src="@{/newsletterScript.js}"></script>
+<script th:src="@{/reviewScript.js}"></script>
 <script th:src="'https://code.jquery.com/jquery-3.2.1.slim.min.js'" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script th:src="'https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js'" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script th:src="'https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js'" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

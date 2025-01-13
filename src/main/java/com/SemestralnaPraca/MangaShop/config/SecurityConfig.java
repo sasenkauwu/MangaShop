@@ -35,6 +35,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/users").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/api/user/**").authenticated()
                         .requestMatchers("/api/cart/**").authenticated()
+                        .requestMatchers("api/review/getAll/**").permitAll()
+                        .requestMatchers("api/review/**").authenticated()
                         .requestMatchers("/profile").authenticated()
                         .requestMatchers("/cart").authenticated()
                         .anyRequest().permitAll() // Zvyšok bez auth

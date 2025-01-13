@@ -4,6 +4,7 @@ import com.SemestralnaPraca.MangaShop.DTO.ProductSaveDTO;
 import com.SemestralnaPraca.MangaShop.DTO.ProductUpdateDTO;
 import com.SemestralnaPraca.MangaShop.entity.Product;
 import com.SemestralnaPraca.MangaShop.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,14 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
+    //TODO toto opravit lebo to je napicu(id je v mappingu ale nikde sa nepouziva v parametre)
     @PutMapping("/update/{id}")
-    public void updateProduct(@RequestBody ProductUpdateDTO productUpdateDTO) {
+    public void updateProduct(@RequestBody @Valid ProductUpdateDTO productUpdateDTO) {
         productService.updateProduct(productUpdateDTO);
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> save(@ModelAttribute ProductSaveDTO productSaveDTO) {
+    public ResponseEntity<String> save(@ModelAttribute @Valid ProductSaveDTO productSaveDTO) {
         try {
             UUID id = productService.saveProduct(productSaveDTO);
             return ResponseEntity.ok().build();

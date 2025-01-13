@@ -112,7 +112,7 @@ button:hover {
     max-width: 1600px;
     background-color: #f5f5f5;
     border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .product-details-image {
@@ -151,5 +151,16 @@ button:hover {
 }
 
 .product-details-add-to-cart button:hover {
-    background-color: #0056b3;
+    background-color: black;
+}
+
+.reviews-container .card {
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.reviews-container .card .card-body {
+    padding: 20px;
 }

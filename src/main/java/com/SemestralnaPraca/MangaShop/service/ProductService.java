@@ -65,7 +65,6 @@ public class ProductService {
 
         MultipartFile file = productSaveDTO.getImageFile();
         if (file != null && !file.isEmpty()) {
-            //String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
             String fileName = file.getOriginalFilename();
             System.out.println(fileName);   //debug
             Path filePath = Paths.get(uploadPath, fileName);
